@@ -12,14 +12,14 @@ public class Fish extends Actor
     private int maxSpeed = 8;
     private int speed = minSpeed + maxSpeed / 2;
     
-    private Container container;
+    private BobberBar container;
     private int halfContainerHeight;
     
     public Fish() {
         setImage("BobberFish.png");
     }
     
-    public Fish(Container container) {
+    public Fish(BobberBar container) {
         setImage("BobberFish.png");
         this.container = container;
         halfContainerHeight = container.getImage().getHeight() / 2;

@@ -13,10 +13,32 @@ public class Item extends Actor
     
     private boolean isSelected = false;
 
-    public Item(String name, GameWorld.ItemRaritiy rarity, String imagePath) {
+    
+    public Item(String name, String rarity) {
+        this.name = name;
+        
+        switch(rarity){
+            case "TRASH":
+                this.rarity = GameWorld.ItemRaritiy.TRASH;
+                break;
+            case "COMMON":
+                this.rarity = GameWorld.ItemRaritiy.COMMON;
+                break;
+            case "RARE":
+                this.rarity = GameWorld.ItemRaritiy.RARE;
+                break;
+            case "LEGENDARY":
+                this.rarity = GameWorld.ItemRaritiy.LEGENDARY;
+                break;
+        }
+        
+        setImage("items/" + name + ".png");
+    }
+    
+    public Item(String name, GameWorld.ItemRaritiy rarity) {
         this.name = name;
         this.rarity = rarity;
-        setImage(imagePath);
+        setImage("items/" + name + ".png");
     }
 
     public String getName() { return name; }
@@ -24,6 +46,9 @@ public class Item extends Actor
     public int getQuantity() { return quantity; }
 
     public void setQuantity(int quantity) { this.quantity = quantity; } 
+    
+    public void increaseQuantity() { this.quantity++; }
+    public void decreaseQuantity() { this.quantity--; }
 
     public void onClick(int buttonDesc) {
         Inventory inventory = (Inventory) getWorld();

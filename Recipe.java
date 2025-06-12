@@ -1,15 +1,16 @@
 
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import java.util.ArrayList;
 
 public class Recipe extends Actor
 {
-    private Item[] ingredients;
+    private ArrayList<Item> ingredients;
     private Item resultItem;
     private int resultQuantity;
     private int levelRequired;
     private GameWorld gameWorld;
 
-    public Recipe(GameWorld gameWorld, Item[] ingredients, Item resultItem, int resultQuantity, int levelRequired) {
+    public Recipe(GameWorld gameWorld, ArrayList<Item> ingredients, Item resultItem, int resultQuantity, int levelRequired) {
         this.gameWorld = gameWorld;
         this.ingredients = ingredients;
         this.resultItem = resultItem;
@@ -17,14 +18,14 @@ public class Recipe extends Actor
         this.levelRequired = levelRequired;
     }
 
-    public Item[] getIngredients() { return ingredients; }
+    public ArrayList<Item> getIngredients() { return ingredients; }
     public int getRequiredLevel() { return levelRequired; }
     
-    public boolean Craft(Item[] givenIngredients) {
-        for (int i = 0; i < givenIngredients.length; i++) {
+    public boolean Craft(ArrayList<Item> givenIngredients) {
+        for (int i = 0; i < givenIngredients.size(); i++) {
             boolean isReallyNeeded = false;
-            for (int j = 0; j < ingredients.length; j++) {
-                if (givenIngredients[i] == ingredients[j]) {
+            for (int j = 0; j < ingredients.size(); j++) {
+                if (givenIngredients.get(i) == ingredients.get(j)) {
                     isReallyNeeded = true;
                 }
             }

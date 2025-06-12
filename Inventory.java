@@ -1,4 +1,5 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import java.util.ArrayList;
 
 public class Inventory extends World
 {
@@ -9,9 +10,9 @@ public class Inventory extends World
 
     private GameWorld gameWorld;
     
-    private Item[] ownedItems = new Item[maxSlots];
-    private Item[] craftItems = new Item[craftSlots];
-    private Recipe[] knownRecieps;
+    private ArrayList<Item> ownedItems = new ArrayList<Item>();
+    private ArrayList<Item> craftItems = new ArrayList<Item>();;
+    private ArrayList<Recipe> knownRecieps;
 
     public Inventory(GameWorld gw)
     {    
@@ -27,76 +28,88 @@ public class Inventory extends World
         }), getWidth() / 2, getHeight() - 75);
         
         gameWorld = gw; 
-        knownRecieps = new Recipe[gameWorld.getAvaliableRecipes().length];
+        knownRecieps = new ArrayList<Recipe>(/*gameWorld.getAvaliableRecipes().size()*/);
+        /*
+        for(int i = 0; i < ownedItems.size(); i++){
+            ownedItems.set(i, null);
+        }
+        for(int i = 0; i < craftItems.size(); i++){
+            craftItems.set(i, null);
+        }
+        for(int i = 0; i < knownRecieps.size(); i++){
+            craftItems.set(i, null);
+        }*/
     }
 
-    public Recipe[] getKnownRecipes() { return knownRecieps; }
+    public ArrayList<Recipe> getKnownRecipes() { return knownRecieps; }
 
     public void addRecipe(Recipe recipeToAdd) {
-        for (int i = 0; i < knownRecieps.length; i++) {
-            if (knownRecieps[i] == null) knownRecieps[i] = recipeToAdd;
-        }
+        knownRecieps.add(recipeToAdd);
+        
     }
 
     public void addItem(Item item) {
-        for (int i = 0; i < availableSlots; i++) {
-            if (ownedItems[i] == item) {
-                ownedItems[i].setQuantity(ownedItems[i].getQuantity() + 1);
-                return;
-            }
-            else if (ownedItems[i] == null) {
-                item.setQuantity(1);
-                ownedItems[i] = item;
-                addObject(ownedItems[i], 0, 0);
-                return;
-            }
+        int index = ownedItems.indexOf(item);
+        if (index != -1) {
+            ownedItems.get(index).increaseQuantity();
+            return;
         }
-        //Нет места в инвентаре
+        if(ownedItems.size() == maxSlots){ 
+            return; //Нет места в инвентаре
+        }
+        // Уникальный предмет, место в инвентаре есть
+        item.setQuantity(1);
+        ownedItems.add(item);
+        //index = ownedItems.indexOf(item);
+        addObject(item, 0, 0);
+        
+        
     }
 
     public void removeItem(Item item) {
-        for (int i = 0; i < availableSlots; i++) {
-            if (ownedItems[i] == item) {
-                ownedItems[i].setQuantity(ownedItems[i].getQuantity() - 1);
-                //Удаляем из массива и сдвигаем элементы в нем
-                if (ownedItems[i].getQuantity() == 0) {
-                    removeObject(ownedItems[i]);
-                    for (int j = i + 1; j < availableSlots; j++) {
-                        ownedItems[j - 1] = ownedItems[j];
-                        ownedItems[j] = null;
-                    }
-                }
-                return;
+        int index = ownedItems.indexOf(item);
+        if (index != -1) {
+            ownedItems.get(index).decreaseQuantity();
+            //Удаляем из массива и сдвигаем элементы в нем
+            if (ownedItems.get(index).getQuantity() == 0) {
+                removeObject(ownedItems.get(index));
+                ownedItems.remove(index);
+                /*
+                for (int j = i + 1; j < availableSlots; j++) {
+                    ownedItems[j - 1] = ownedItems[j];
+                    ownedItems[j] = null;
+                }*/
             }
         }
+        
     }
 
     public boolean addToCraft(Item item) {
-        for (int i = 0; i < craftSlots; i++) {
-            if (craftItems[i] == null) {
-                craftItems[i] = item;
-                return true;
-            }
+        int index = craftItems.indexOf(item);
+        if (index == -1) {
+            craftItems.add(item);
+            return true;
         }
+        
         return false;
     }
 
     public boolean removeFromCraft(Item item) {
-        for (int i = 0; i < craftSlots; i++) {
-            if (craftItems[i] == item) {
-                craftItems[i] = null;
-                return true;
-            }
+        int index = craftItems.indexOf(item);
+        if (index != -1) {
+            craftItems.remove(index);
+            return true;
         }
+        
         return false;
     }
 
     public void updateDisplay() {
-        for (int i = 0; i < availableSlots; i++) {
-            if (ownedItems[i] == null) return;
-            ownedItems[i].setLocation(getWidth() * (i + 1) / (slotsPerRow + 1), 
+        for (int i = 0; i < ownedItems.size(); i++) {
+            //if (craftItems.get(i) == null) return;
+            ownedItems.get(i).setLocation(getWidth() * (i + 1) / (slotsPerRow + 1), 
             (getHeight() - 200) * 1 / (maxSlots / slotsPerRow));
-            drawQuantity(ownedItems[i], i);
+            drawQuantity(ownedItems.get(i), i);
         }
     }
 
@@ -108,6 +121,6 @@ public class Inventory extends World
                 32, 
                 Color.BLACK, 
                 Color.WHITE)
-        ), getWidth() * (position + 1) / (slotsPerRow + 1) + 50,  (getHeight() - 200) * 1 / (maxSlots / slotsPerRow) - 50);
+        ), getWidth() * (position + 1) / (slotsPerRow + 1),  (getHeight() - 200) * 1 / (maxSlots / slotsPerRow) - 50);
     }
 }

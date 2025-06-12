@@ -1,0 +1,5 @@
+Fish_Bones;TRASH
+Old_Boot;TRASH
+Common_Carp;COMMON
+Small_Perch;RARE
+Shiny_Stone;LEGENDARY

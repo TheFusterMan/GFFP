@@ -6,12 +6,12 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class Container extends Actor
+public class BobberBar extends Actor
 {
     int Height = 100;
     int Width = 100;
-    private int minSpeed = 2;
-    private int maxSpeed = 6;
+    private int minSpeed = 1;
+    private int maxSpeed = 2;
 
     private int fishLocation = 0;
     private int fishTarget = 0;
@@ -21,7 +21,7 @@ public class Container extends Actor
     //GreenfootImage Fish = new GreenfootImage("BobberFish.png");
     GreenfootImage bar = new GreenfootImage("minigame_container.png");
     
-    public Container() {
+    public BobberBar() {
         setImage(bar);
         Height = bar.getHeight();
         Width = bar.getWidth();

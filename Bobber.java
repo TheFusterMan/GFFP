@@ -12,7 +12,7 @@ public class Bobber extends Actor
     private final int LIFT_SPEED = -5;
     private final int GRAVITY_SPEED = 3;
     
-    private Container container;
+    private BobberBar container;
     private int halfContainerHeight;
     
     private int initPostionX = -1;
@@ -28,7 +28,7 @@ public class Bobber extends Actor
         halfHeight = getImage().getHeight() / 2;
     }
     
-    public Bobber(Container container) {
+    public Bobber(BobberBar container) {
         setImage("bobber.png");
         this.container = container;
         halfContainerHeight = container.getImage().getHeight() / 2;
