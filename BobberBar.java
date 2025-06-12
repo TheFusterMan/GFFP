@@ -17,9 +17,10 @@ public class BobberBar extends Actor
     private int fishTarget = 0;
     private int fishSpeed = 0;
     private Fish fish;
-    
+    private GameWorld world;
     //GreenfootImage Fish = new GreenfootImage("BobberFish.png");
     GreenfootImage bar = new GreenfootImage("minigame_container.png");
+    Icon background = new Icon("bobberbar_Back.png");
     
     public BobberBar() {
         setImage(bar);
@@ -30,8 +31,15 @@ public class BobberBar extends Actor
         //setImage("BobberBar_Background.png");
     }
     
+    public void destructor(){
+        world.removeObject(fish);
+        world.removeObject(background);
+    }
+    
      public void addedToWorld(World world){
-        world.addObject(fish, getX(), getY() + Height/2);
+        this.world = (GameWorld) world;
+        this.world.addObject(fish, getX()+2, getY() + Height/2);
+        this.world.addObject(background, getX()-2, getY());
     }
     
     public void act()
@@ -62,7 +70,7 @@ public class BobberBar extends Actor
         } else if(fishLocation < 1) {
             fishLocation = 1;
         } else {
-            fish.setLocation(getX(), fish.getY() - fishSpeed);
+            fish.setLocation(fish.getX(), fish.getY() - fishSpeed);
         }
         
     }

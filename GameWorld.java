@@ -70,6 +70,7 @@ public class GameWorld extends World
         this.menu = menu;
         this.inventory = new Inventory(this);
         this.player = new Player(inventory, this);
+        setPaintOrder(Bobber.class, Fish.class, Icon.class, BobberBar.class);
         
         IncludesUploader IU = new IncludesUploader();
         avaliableItems = IU.uploadItems();
@@ -103,7 +104,7 @@ public class GameWorld extends World
         }), getWidth() - 90, 90);
         //addObject(player, getWidth() / 2, 10);
 
-        levelingProgressBar = new ProgressBar(200, 15, 0);
+        levelingProgressBar = new ProgressBar(200, 15, 0, true);
         addObject(levelingProgressBar, getWidth() / 2, 25);
         addObject(levelIcon, getWidth() / 2, 50);
     }
@@ -131,7 +132,7 @@ public class GameWorld extends World
                 break;
             case FISH_CAUGHT:                
                 removeObject(catchingProgressBar);
-                removeObject(minigameContainer.getFish());
+                minigameContainer.destructor();
                 removeObject(minigameBobberIcon);
                 removeObject(minigameContainer);
                 removeObject(bobber);
@@ -148,7 +149,7 @@ public class GameWorld extends World
                 //И ТУТ ТОЖЕ НАДО ВСЕ УДАЛЯТЬ
                 // Показать сообщение, подождать, вернуться в IDLE
                 removeObject(catchingProgressBar);
-                removeObject(minigameContainer.getFish());
+                minigameContainer.destructor();
                 removeObject(minigameBobberIcon);
                 removeObject(minigameContainer);
                 removeObject(bobber);
@@ -169,8 +170,8 @@ public class GameWorld extends World
         //addObject(minigameFishIcon, getWidth() / 2, getHeight() / 2);
         addObject(minigameBobberIcon, getWidth() / 2, getHeight() / 2);
     
-        catchingProgressBar = new ProgressBar(200, 10, 0.35);
-        addObject(catchingProgressBar, getWidth() / 2, getHeight() * 3 / 4);
+        catchingProgressBar = new ProgressBar(10, 225, 0.35, false);
+        addObject(catchingProgressBar, getWidth() / 2 + 33, getHeight() / 2);
     }
     
     public void spawnBobber() {

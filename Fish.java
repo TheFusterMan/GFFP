@@ -16,11 +16,11 @@ public class Fish extends Actor
     private int halfContainerHeight;
     
     public Fish() {
-        setImage("BobberFish.png");
+        setImage("fish.png");
     }
     
     public Fish(BobberBar container) {
-        setImage("BobberFish.png");
+        setImage("fish.png");
         this.container = container;
         halfContainerHeight = container.getImage().getHeight() / 2;
     }
