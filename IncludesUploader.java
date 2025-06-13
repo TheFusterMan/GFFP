@@ -3,10 +3,16 @@
 import greenfoot.*;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 
 public class IncludesUploader  
 {   
+    GameWorld gameWorld;
+
+    public IncludesUploader(GameWorld gw) {
+        gameWorld = gw;
+    }
     //шаблон: название_предмета;РЕДКОСТЬ
     //необходимо поддерживать порядок по возрастанию редкости сверху-вниз 
     public ArrayList<Item> uploadItems(){
@@ -40,7 +46,9 @@ public class IncludesUploader
             Item buffer;
             while((s = items.readLine()) != null){
                 temp = s.split(";");
-                buffer = new Item(temp[0], temp[1]);        
+                Item[] copyOfTemp = Arrays.copyOfRange(temp, 1, lastIndex);
+                int lastIndex = temp.length - 1;
+                buffer = new Recipe(gameWorld, copyOfTemp, temp[lastIndex], temp[0]);        
                 allItems.add(buffer);
             }
         }

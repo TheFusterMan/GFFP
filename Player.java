@@ -17,7 +17,6 @@ public class Player extends Actor
     
     public void act()
     {
-         
         if (Greenfoot.isKeyDown("space") && world.getGameState() == GameWorld.GameState.IDLE) {
             world.spawnBobber();
             world.setGameState(GameWorld.GameState.WAITING_FOR_BITE);
@@ -35,6 +34,7 @@ public class Player extends Actor
         while (experience >= experienceToLevelUp) {
             experience -= experienceToLevelUp;
             level += 1;
+            if (level == 6) 
             world.updateLevelingProgressBar(0);
             world.updateLevelIcon(level);
         }

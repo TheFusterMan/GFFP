@@ -1,1 +1,2 @@
-2;rusty_anchor;sunken_chest;diamond_ring
+common_carp;fish_bones;shiny_stone
+rusty_anchor;sunken_chest;diamond_ring

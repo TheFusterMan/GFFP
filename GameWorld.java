@@ -52,7 +52,7 @@ public class GameWorld extends World
         this.player = new Player(inventory, this);
         setPaintOrder(Bobber.class, Fish.class, Icon.class, BobberBar.class);
         
-        IncludesUploader IU = new IncludesUploader();
+        IncludesUploader IU = new IncludesUploader(this);
         avaliableItems = IU.uploadItems();
         //availableRecipes = IU.uploadRecipes();   
             
@@ -90,7 +90,7 @@ public class GameWorld extends World
                 }
                 
                 if (minigameBobberIcon.checkIntersection(minigameContainer.getFish())) 
-                    catchingProgressBar.changeProgress(catchingProgressBar.getProgress()+0.005);
+                    catchingProgressBar.changeProgress(catchingProgressBar.getProgress()+1.005);
                 else catchingProgressBar.changeProgress(catchingProgressBar.getProgress()-0.005);
                 
                 if (catchingProgressBar.getProgress() >= 1) setGameState(GameState.FISH_CAUGHT);
@@ -105,15 +105,13 @@ public class GameWorld extends World
                 
                 minigameContainer = null;
                 
-                Item caughtItem = getRandomItem();
+                Item caughtItem = getRandomItem().getCopy();
                 inventory.addItem(caughtItem);
                 player.addExperience(caughtItem);
                 
                 setGameState(GameState.IDLE);
                 break;
             case FISH_ESCAPED:
-                //И ТУТ ТОЖЕ НАДО ВСЕ УДАЛЯТЬ
-                // Показать сообщение, подождать, вернуться в IDLE
                 removeObject(catchingProgressBar);
                 minigameContainer.destructor();
                 removeObject(minigameBobberIcon);
@@ -131,9 +129,7 @@ public class GameWorld extends World
         minigameContainer = new BobberBar();
         addObject(minigameContainer, getWidth() / 2, getHeight() / 2);
         
-        //minigameFishIcon = new Fish(minigameContainer);
         minigameBobberIcon = new Bobber(minigameContainer);
-        //addObject(minigameFishIcon, getWidth() / 2, getHeight() / 2);
         addObject(minigameBobberIcon, getWidth() / 2, getHeight() / 2);
     
         catchingProgressBar = new ProgressBar(10, 225, 0.35, false);
@@ -211,5 +207,9 @@ public class GameWorld extends World
     public void turnMusicOn(boolean isOn) {
         if (isOn) backgroundMusic.playLoop();
         else backgroundMusic.stop();
+    }
+
+    public void getToWinScreen() {
+        Greenfoot.setWorld(new WinScreen(menu, this));
     }
 }

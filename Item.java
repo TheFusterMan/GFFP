@@ -5,7 +5,6 @@ public class Item extends Actor
 {
     private String name;
     private GameWorld.ItemRaritiy rarity;
-    private int quantity = 0;
 
     private int mouseOnTransparency = 218;
     private int mouseOffTransparency = 255;
@@ -43,13 +42,7 @@ public class Item extends Actor
 
     public String getName() { return name; }
     public GameWorld.ItemRaritiy getRarity() { return rarity; }
-    public int getQuantity() { return quantity; }
-
-    public void setQuantity(int quantity) { this.quantity = quantity; } 
     
-    public void increaseQuantity() { this.quantity++; }
-    public void decreaseQuantity() { this.quantity--; }
-
     public void onClick(int buttonDesc) {
         Inventory inventory = (Inventory) getWorld();
 
@@ -68,6 +61,10 @@ public class Item extends Actor
             inventory.removeItem(this);
             inventory.updateDisplay();
         }
+    }
+
+    public Item getCopy() {
+        return new Item(name, rarity);
     }
 
     public void act()
