@@ -6,15 +6,13 @@ public class Recipe extends Actor
 {
     private ArrayList<Item> ingredients;
     private Item resultItem;
-    private int resultQuantity;
     private int levelRequired;
     private GameWorld gameWorld;
 
-    public Recipe(GameWorld gameWorld, ArrayList<Item> ingredients, Item resultItem, int resultQuantity, int levelRequired) {
+    public Recipe(GameWorld gameWorld, ArrayList<Item> ingredients, Item resultItem, int levelRequired) {
         this.gameWorld = gameWorld;
         this.ingredients = ingredients;
         this.resultItem = resultItem;
-        this.resultQuantity = resultQuantity;
         this.levelRequired = levelRequired;
     }
 

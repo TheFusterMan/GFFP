@@ -28,6 +28,8 @@ public class Menu extends World
                 }), this.getWidth() / 2, this.getHeight() / 2 - logoOffset);
         addObject(new Button("buttons/start.png", () -> {
                         Greenfoot.setWorld(gameWorld);
+                        gameWorld.turnMusicOn(true);
+
                 }), this.getWidth() / 2, this.getHeight() / 2 + firstButtonOffset);
         addObject(new Button("buttons/help.png", () -> {
                         Greenfoot.setWorld(instructions);

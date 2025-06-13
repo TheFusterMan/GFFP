@@ -24,12 +24,12 @@ public class GameWorld extends World
     
     private GameState currentGameState = GameState.IDLE;
     private Bobber bobber;
+    GreenfootSound backgroundMusic = new GreenfootSound("music/gone_fishing.wav");
     
     private ProgressBar catchingProgressBar;
     private ProgressBar levelingProgressBar;
     private BobberBar minigameContainer;
     private Bobber minigameBobberIcon;
-    //private Fish minigameFishIcon;
     
     private int timeLeftInFrames = 0;
     private int timeLeftInSeconds;
@@ -37,26 +37,6 @@ public class GameWorld extends World
     private ArrayList<Item> avaliableItems = new ArrayList<Item>();
     private ArrayList<Recipe> availableRecipes = new ArrayList<Recipe>();
     
-    //При добавлении новых элементов необходимо сохранять порядок редкости
-    /*
-    private final Item[] avaliableItems = {
-        new Item("Fish_Bones", ItemRaritiy.TRASH),
-        new Item("Old_Boot", ItemRaritiy.TRASH),
-        new Item("Common_Carp", ItemRaritiy.COMMON),
-        new Item("Small_Perch", ItemRaritiy.RARE),
-        new Item("Shiny_Stone", ItemRaritiy.LEGENDARY),
-    };*/
-    //Рецепт обязательно должен включать 3 компонента
-    /*
-    private final Recipe[] availableRecipes = {
-        new Recipe(
-            this,
-            new Item[] { avaliableItems.get(0), avaliableItems.get(1), avaliableItems.get(2) },
-            new Item("Shiny_Stone", ItemRaritiy.RARE),
-            1,
-            1),
-        //идеи: бафф на опыт, улучшение для инвентаря, сеть-ловушка (автоматическая)
-    };*/
     private int trashRarityIndex = 0, commonRarityIndex, rareRarityIndex, legendaryRarityIndex; //можно не указывать, автоматически определяются при создании мира
 
     private Icon levelIcon = new Icon("icons/level_1.png");
@@ -74,22 +54,7 @@ public class GameWorld extends World
         
         IncludesUploader IU = new IncludesUploader();
         avaliableItems = IU.uploadItems();
-        
-        
-        //availableRecipes = IU.uploadRecipes();
-        
-        
-        ArrayList<Item> buffer = new ArrayList<Item>(); 
-        buffer.add(avaliableItems.get(0));
-        buffer.add(avaliableItems.get(1));
-        buffer.add(avaliableItems.get(2));
-        availableRecipes.add(new Recipe(
-            this,
-            buffer,
-            new Item("Shiny_Stone", ItemRaritiy.RARE),
-            1,
-            1)); /* Этот пример потом пропадёт **/////////////////////////////////////////////////////////////
-        
+        //availableRecipes = IU.uploadRecipes();   
             
             
         player.learnRecipesOnLevelUp(availableRecipes);
@@ -97,6 +62,7 @@ public class GameWorld extends World
         
         addObject(new Button("buttons/menu.png", () -> {
             Greenfoot.setWorld(menu);
+            this.turnMusicOn(false);
         }), 100, 30);
         addObject(new Button("buttons/inventory.png", () -> {
             Greenfoot.setWorld(inventory);
@@ -240,5 +206,10 @@ public class GameWorld extends World
         else if (level == 3) levelIcon.setImage("icons/level_3.png");
         else if (level == 4) levelIcon.setImage("icons/level_4.png");
         else if (level == 5) levelIcon.setImage("icons/level_5.png");
+    }
+
+    public void turnMusicOn(boolean isOn) {
+        if (isOn) backgroundMusic.playLoop();
+        else backgroundMusic.stop();
     }
 }
