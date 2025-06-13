@@ -13,6 +13,12 @@ public class Item extends Actor
     private boolean isSelected = false;
 
     
+    public Item(String name){
+        this.name = name;
+        rarity = null;
+        setImage("items/" + name + ".png");
+    }
+
     public Item(String name, String rarity) {
         this.name = name;
         

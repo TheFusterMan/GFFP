@@ -54,7 +54,7 @@ public class GameWorld extends World
         
         IncludesUploader IU = new IncludesUploader(this);
         avaliableItems = IU.uploadItems();
-        //availableRecipes = IU.uploadRecipes();   
+        availableRecipes = IU.uploadRecipes();   
             
             
         player.learnRecipesOnLevelUp(availableRecipes);
@@ -90,7 +90,7 @@ public class GameWorld extends World
                 }
                 
                 if (minigameBobberIcon.checkIntersection(minigameContainer.getFish())) 
-                    catchingProgressBar.changeProgress(catchingProgressBar.getProgress()+1.005);
+                    catchingProgressBar.changeProgress(catchingProgressBar.getProgress()+0.005);
                 else catchingProgressBar.changeProgress(catchingProgressBar.getProgress()-0.005);
                 
                 if (catchingProgressBar.getProgress() >= 1) setGameState(GameState.FISH_CAUGHT);
@@ -192,6 +192,7 @@ public class GameWorld extends World
         }
     }
 
+    public ArrayList<Item> getAvaliableItems() { return avaliableItems; }
     public ArrayList<Recipe> getAvaliableRecipes() { return availableRecipes; }
     public Inventory getInventory() { return inventory; }
     public Player getPlayer() { return player; }
@@ -211,5 +212,13 @@ public class GameWorld extends World
 
     public void getToWinScreen() {
         Greenfoot.setWorld(new WinScreen(menu, this));
+    }
+
+    static boolean stringEqual(String first, String Second){
+        if(first.length() != Second.length()) return false;
+        for(int i = 0; i < first.length(); i++) {
+            if(first.charAt(i) != Second.charAt(i)) return false;
+        }
+        return true;
     }
 }

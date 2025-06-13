@@ -1,2 +1,3 @@
-common_carp;fish_bones;shiny_stone
-rusty_anchor;sunken_chest;diamond_ring
+rusty_anchor;common_carp=shiny_stone=1
+tin_can;rusty_anchor=abyssal_horror_eye=2
+bream;catfish=sea_dragon_bone=4

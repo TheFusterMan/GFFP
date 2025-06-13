@@ -11,7 +11,7 @@ public class BobberBar extends Actor
     int Height = 100;
     int Width = 100;
     private int minSpeed = 1;
-    private int maxSpeed = 2;
+    private int maxSpeed = 7;
 
     private int fishLocation = 0;
     private int fishTarget = 0;

@@ -35,27 +35,32 @@ public class IncludesUploader
         return allItems;
     }
     
-    //шаблон: требуемый_уровень;предмет_1;...;предмет_N;результирующий_предмет
+    //шаблон: требуемый_уровень;id_предмета_1;...;;id_предмета_N;;id_результирующего_предмета
     //все предметы, используемый в крафте, должны быть в файле items.txt
-    public ArrayList<Item> uploadRecipes(){
-        ArrayList<Item> allItems = new ArrayList<Item>();
-            
-        try(BufferedReader items = new BufferedReader(new FileReader("includes/recipes.txt"))) {
+    public ArrayList<Recipe> uploadRecipes() {
+        ArrayList<Recipe> allRecipes = new ArrayList<Recipe>();
+        
+        try(BufferedReader recipes = new BufferedReader(new FileReader("includes/recipes.txt"))) {
             String s;
-            String[] temp;
-            Item buffer;
-            while((s = items.readLine()) != null){
-                temp = s.split(";");
-                Item[] copyOfTemp = Arrays.copyOfRange(temp, 1, lastIndex);
-                int lastIndex = temp.length - 1;
-                buffer = new Recipe(gameWorld, copyOfTemp, temp[lastIndex], temp[0]);        
-                allItems.add(buffer);
+            String[] temp, ingredients;
+            Recipe buffer;
+            while((s = recipes.readLine()) != null){
+                temp = s.split("=");
+                ingredients = temp[0].split(";");
+                ArrayList<String> itemsForCraft = new ArrayList<String>();
+                
+                for (int i = 0; i < ingredients.length; i++) {
+                    itemsForCraft.add(ingredients[i]);
+                }
+
+                buffer = new Recipe(gameWorld, itemsForCraft, temp[1], Integer.parseInt(temp[2]));        
+                allRecipes.add(buffer);
             }
         }
         catch(IOException ex){
             System.out.println(ex.getMessage());
         } 
 
-        return allItems;
+        return allRecipes;
     }
 }
